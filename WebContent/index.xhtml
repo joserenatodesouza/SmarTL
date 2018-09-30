@@ -34,7 +34,7 @@
      
      <div style="float: center">
      <div style="width: 20%; float: left">
-     <p:dataTable id="Veiculos" var="Veiculos" value="#{hackbean.arrayCarrosSinal1}" rowStyleClass="#{hackbean.qtdSinalMaisCarros eq 2 ? 'Verde' : 'Vermelho'}">
+     <p:dataTable id="Veiculos" var="Veiculos" value="#{hackbean.arrayCarrosSinal1}" rowStyleClass="#{hackbean.sinalVerde eq 2 ? 'Verde' : 'Vermelho'}">
 								<p:column headerText="Sinal1" style="width:10%">
 								<!--  <h:outputText value="teste123" />-->
 									
@@ -47,13 +47,12 @@
 							</p:dataTable>
 	</div>
 	<div style="width: 20%; float: left">
-	<p:dataTable id="Veiculos" var="Veiculos" value="#{hackbean.arrayCarrosSinal2}" rowStyleClass="#{hackbean.qtdSinalMaisCarros eq 1 ? 'Verde' : 'Vermelho'}">
+	<p:dataTable id="Veiculos" var="Veiculos" value="#{hackbean.arrayCarrosSinal2}" rowStyleClass="#{hackbean.sinalVerde eq 1 ? 'Verde' : 'Vermelho'}">
 								<p:column headerText="Sinal2" style="width:20%">
 								<!--  <h:outputText value="teste123" />-->
 									<figure>
 										<img src="#{hackbean.onibusSinal2 eq 0 ?'Imagens/carro.jpg':'Imagens/CarroeOnibus.png'}" width="20px" align="middle" height="25px" />
 									</figure>
-									
 								</p:column>
 							</p:dataTable>
 	</div>

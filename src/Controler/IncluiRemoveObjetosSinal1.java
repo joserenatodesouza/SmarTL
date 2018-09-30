@@ -62,14 +62,16 @@ public class IncluiRemoveObjetosSinal1 {
 	public int Random() {
 		 //instância um objeto da classe Random usando o construtor padrão
 	     Random gerador = new Random();
-	     int num = gerador.nextInt(3) + 1;
+	     int num = gerador.nextInt(2) + 1;
 	     
 	     return num;
 	}
 	public int RandomBus() {
 		 //instância um objeto da classe Random usando o construtor padrão
 	     Random gerador = new Random();
-	     return gerador.nextInt(2);
+	     int num = gerador.nextInt(2) - 1;
+	     
+	     return num;
 	}
 	
 	

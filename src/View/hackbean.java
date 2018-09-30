@@ -22,7 +22,8 @@ import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 	public class hackbean  {
 		public ArrayList<Carro> ArrayCarrosSinal1 = new ArrayList();
 		public ArrayList<Carro> ArrayCarrosSinal2 = new ArrayList();
-		public ArrayList<Onibus> ArrayOnibus = new ArrayList();
+		public ArrayList<Onibus> ArrayOnibusSinal1 = new ArrayList();
+		public ArrayList<Onibus> ArrayOnibusSinal2 = new ArrayList();
 		public int QtdSinalMaisCarros = 0;
 		public int QtdCarros = 0;
 		public int QtdCarrosSinal1 = 0;
@@ -32,6 +33,8 @@ import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 		public int TempoExecucao = 2;
 		public int onibusSinal1 = 0;
 		public int onibusSinal2 = 0;
+		public int sinalVerde = 0;
+		
 		//Cria as sinaleiras
 		 IncluiRemoveObjetosSinal1 Sinal1 = new IncluiRemoveObjetosSinal1();
 		 IncluiRemoveObjetosSinal2 Sinal2 = new IncluiRemoveObjetosSinal2();
@@ -48,21 +51,19 @@ import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 		QtdSinalMaisCarros = SinalMaisCarros();
 		System.out.println(QtdSinalMaisCarros);
 		if (QtdSinalMaisCarros == 1){
-			System.out.println("teste1");
 			abreSinal1();
 			Sinal1.IncluiCarro();
 			Sinal2.IncluiCarro();
 			Sinal1.IncluiOnibus();
 			Sinal2.IncluiOnibus();
 		} else {
-			System.out.println("teste2");
 				abreSinal2();
 				Sinal1.IncluiCarro();
 				Sinal2.IncluiCarro();
 				Sinal1.IncluiOnibus();
 				Sinal2.IncluiOnibus();
 				}
-		
+		ExibeVeiculos();
 	}
 		
 
@@ -71,24 +72,34 @@ import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 			new Thread().sleep(TempoIncluiVeiculos);
 			Sinal1.IncluiCarro();
 			QtdCarrosSinal1++;
-			ArrayCarrosSinal1 = Sinal1.ExibeCarros();
+			//ArrayCarrosSinal1 = Sinal1.ExibeCarros();
 			
 			new Thread().sleep(TempoIncluiVeiculos);
 			Sinal2.IncluiCarro();
 			QtdCarrosSinal2++;
-			ArrayCarrosSinal2 = Sinal2.ExibeCarros();
+			//ArrayCarrosSinal2 = Sinal2.ExibeCarros();
 			
 			new Thread().sleep(TempoIncluiVeiculos);
 			onibusSinal1 = Sinal1.IncluiOnibus();;
 			QtdCarrosSinal1++;
-			ArrayCarrosSinal1 = Sinal1.ExibeCarros();
+			//ArrayCarrosSinal1 = Sinal1.ExibeCarros();
 			
 			new Thread().sleep(TempoIncluiVeiculos);
 			onibusSinal2 = Sinal2.IncluiOnibus();;
 			QtdCarrosSinal2++;
-			ArrayCarrosSinal2 = Sinal2.ExibeCarros();
+			//ArrayCarrosSinal2 = Sinal2.ExibeCarros();
 	
 	}
+	
+	//Exibe carro inicialmente
+		public  void ExibeVeiculos() throws InterruptedException{
+				ArrayCarrosSinal1 = Sinal1.ExibeCarros();
+				ArrayCarrosSinal2 = Sinal2.ExibeCarros();
+				ArrayOnibusSinal1 = Sinal1.ExibeOnibus();
+				ArrayOnibusSinal2 = Sinal2.ExibeOnibus();
+		
+		}
+	
 	//Abre o sinal 1 para os carros sairem
 	public  void abreSinal1() throws InterruptedException {
 		
@@ -108,25 +119,46 @@ import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 		int sinal = 0;
 		if (Sinal1.ExibeCarros().size() > Sinal2.ExibeCarros().size()){
 			sinal = 1;
-		} 
-		
-		if (Sinal2.ExibeCarros().size() > Sinal1.ExibeCarros().size()){
+			sinalVerde = 1;
+			if (Sinal2.ExibeOnibus().size() > 0){
+				sinal = 2;
+				sinalVerde = 2;
+			}	
+		} else {
 			sinal = 2;
+			sinalVerde = 2;
+			if  (Sinal1.ExibeOnibus().size() > 0){
+				sinal = 1;
+				sinalVerde = 1;
+			}
 		}
-		if  (Sinal1.ExibeOnibus().size() > 0){
-			sinal = 1;
-		} 
-		
-		if (Sinal2.ExibeOnibus().size() > 0){
-			sinal = 2;
-		}		
 		return sinal;
-	}
+	} 
 	
-//Get e Set do Bean
-	
-		public ArrayList<Onibus> getArrayOnibus() {
-			return ArrayOnibus;
+//Get e Set do Bean	
+
+		public int getSinalVerde() {
+			return sinalVerde;
+		}
+
+		public ArrayList<Onibus> getArrayOnibusSinal1() {
+			return ArrayOnibusSinal1;
+		}
+
+		public void setArrayOnibusSinal1(ArrayList<Onibus> arrayOnibusSinal1) {
+			ArrayOnibusSinal1 = arrayOnibusSinal1;
+		}
+
+		public ArrayList<Onibus> getArrayOnibusSinal2() {
+			return ArrayOnibusSinal2;
+		}
+
+		public void setArrayOnibusSinal2(ArrayList<Onibus> arrayOnibusSinal2) {
+			ArrayOnibusSinal2 = arrayOnibusSinal2;
+		}
+
+		public void setSinalVerde(int sinalVerde) {
+			this.sinalVerde = sinalVerde;
 		}
 
 		public int getOnibusSinal1() {
@@ -143,10 +175,6 @@ import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 		public void setOnibusSinal2(int onibusSinal2) {
 			this.onibusSinal2 = onibusSinal2;
-		}
-
-		public void setArrayOnibus(ArrayList<Onibus> arrayOnibus) {
-			ArrayOnibus = arrayOnibus;
 		}
 
 		public int getQtdSinalMaisCarros() {

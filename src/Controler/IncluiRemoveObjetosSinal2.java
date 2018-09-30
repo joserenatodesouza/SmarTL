@@ -59,14 +59,16 @@ public class IncluiRemoveObjetosSinal2 {
 	public int Random() {
 		 
 	     Random gerador = new Random();
-	     int num = gerador.nextInt(3) + 1;
+	     int num = gerador.nextInt(2) + 1;
 	     
 	     return num;
 	}
 	public int RandomBus() {
 		 
 	     Random gerador = new Random();
-	     return gerador.nextInt(2);
+	     int num = gerador.nextInt(2) - 1;
+	     
+	     return num;
 	}
 	
 }
