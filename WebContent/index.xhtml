@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="pt-br" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	
+	>
+	
+
+<h:head>
+	<title>Hackathon</title>
+	<link rel="stylesheet" href="CSS/index.css" />
+<style>
+.Verde{
+
+ background-color: green;  
+    color: black;
+}
+.Vermelho{
+
+ background-color: red;  
+    color: black;
+}
+</style>
+</h:head>
+
+<h:body>
+<p:layout style="min-width:400px;min-height:200px;">
+     <p:layoutUnit position="center">
+     
+     <div style="float: center">
+     <div style="width: 20%; float: left">
+     <p:dataTable id="Veiculos" var="Veiculos" value="#{hackbean.arrayCarrosSinal1}" rowStyleClass="#{hackbean.qtdSinalMaisCarros eq 2 ? 'Verde' : 'Vermelho'}">
+								<p:column headerText="Sinal1" style="width:10%">
+								<!--  <h:outputText value="teste123" />-->
+									
+									<figure>
+										<img src="#{hackbean.qtdSinalMaisCarros == 1 ?'Imagens/onibus1.jpeg':'Imagens/carro.jpg'}" width="20px" align="middle" height="25px" />
+									</figure>
+									
+									
+								</p:column>
+							</p:dataTable>
+	</div>
+	<div style="width: 20%; float: left">
+	<p:dataTable id="Veiculos" var="Veiculos" value="#{hackbean.arrayCarrosSinal2}" rowStyleClass="#{hackbean.qtdSinalMaisCarros eq 1 ? 'Verde' : 'Vermelho'}">
+								<p:column headerText="Sinal2" style="width:20%">
+								<!--  <h:outputText value="teste123" />-->
+									<figure>
+										<img src="#{hackbean.qtdSinalMaisCarros == 1 ?'Imagens/onibus1.jpeg':'Imagens/carro.jpg'}" width="20px" align="middle" height="25px" />
+									</figure>
+									
+								</p:column>
+							</p:dataTable>
+	</div>
+     		</div>
+    </p:layoutUnit>
+</p:layout>
+</h:body>
+</html>
