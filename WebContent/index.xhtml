@@ -39,7 +39,7 @@
 								<!--  <h:outputText value="teste123" />-->
 									
 									<figure>
-										<img src="#{hackbean.qtdSinalMaisCarros == 1 ?'Imagens/onibus1.jpeg':'Imagens/carro.jpg'}" width="20px" align="middle" height="25px" />
+										<img src="#{hackbean.onibusSinal1 eq 0 ?'Imagens/carro.jpg':'Imagens/CarroeOnibus.png'}" width="20px" align="middle" height="25px" />
 									</figure>
 									
 									
@@ -51,7 +51,7 @@
 								<p:column headerText="Sinal2" style="width:20%">
 								<!--  <h:outputText value="teste123" />-->
 									<figure>
-										<img src="#{hackbean.qtdSinalMaisCarros == 1 ?'Imagens/onibus1.jpeg':'Imagens/carro.jpg'}" width="20px" align="middle" height="25px" />
+										<img src="#{hackbean.onibusSinal2 eq 0 ?'Imagens/carro.jpg':'Imagens/CarroeOnibus.png'}" width="20px" align="middle" height="25px" />
 									</figure>
 									
 								</p:column>

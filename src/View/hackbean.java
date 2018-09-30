@@ -13,6 +13,7 @@ import Controler.IncluiRemoveObjetosSinal4;
 import Model.Carro;
 import Model.Onibus;
 import View.hack;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 
 
 	@ManagedBean(name = "hackbean")
@@ -26,50 +27,46 @@ import View.hack;
 		public int QtdCarros = 0;
 		public int QtdCarrosSinal1 = 0;
 		public  int QtdCarrosSinal2 = 0;
-//		public int QtdCarrosSinal3 = 0;
-//		public int QtdCarrosSinal4 = 0;
-		public int TempoIncluiVeiculos =1000;
+		public int TempoIncluiVeiculos = 1000;
 		public int TempoRemoveVeiculos = 100;
 		public int TempoExecucao = 2;
+		public int onibusSinal1 = 0;
+		public int onibusSinal2 = 0;
 		//Cria as sinaleiras
 		 IncluiRemoveObjetosSinal1 Sinal1 = new IncluiRemoveObjetosSinal1();
 		 IncluiRemoveObjetosSinal2 Sinal2 = new IncluiRemoveObjetosSinal2();
-//		 IncluiRemoveObjetosSinal3 Sinal3 = new IncluiRemoveObjetosSinal3();
-//		 IncluiRemoveObjetosSinal4 Sinal4 = new IncluiRemoveObjetosSinal4();
-		
-//	    public String testString;
-//	    public String teste;
 	   
 	    @PostConstruct  
 	    public void init() throws InterruptedException {
-	        //testString = "Welcome to PrimeFaces!!!";
-	        //teste = "teste123";
 	        Executa();
 	    }
 			
+	    //Inicia a execucao
 	public  void Executa() throws InterruptedException {
-	//	QtdCarros = Integer.parseInt(JOptionPane.showInputDialog("Quantidade de Carros"));
-		int ini = 0;
-		if (ini == 0){
-			IncluiVeiculos();
-			ini++;
-		}
-			
 		
-			QtdSinalMaisCarros = SinalMaisCarros();
-			if (QtdSinalMaisCarros == 1){
-				abreSinal1();
-				Sinal2.IncluiCarro();
-				Sinal1.IncluiCarro();
-			} else {				
+		IncluiVeiculos();
+		QtdSinalMaisCarros = SinalMaisCarros();
+		System.out.println(QtdSinalMaisCarros);
+		if (QtdSinalMaisCarros == 1){
+			System.out.println("teste1");
+			abreSinal1();
+			Sinal1.IncluiCarro();
+			Sinal2.IncluiCarro();
+			Sinal1.IncluiOnibus();
+			Sinal2.IncluiOnibus();
+		} else {
+			System.out.println("teste2");
 				abreSinal2();
-				Sinal1.IncluiCarro();					
+				Sinal1.IncluiCarro();
 				Sinal2.IncluiCarro();
-			}
+				Sinal1.IncluiOnibus();
+				Sinal2.IncluiOnibus();
+				}
+		
 	}
 		
 
-
+	//inclui carro inicialmente
 	public  void IncluiVeiculos() throws InterruptedException{
 			new Thread().sleep(TempoIncluiVeiculos);
 			Sinal1.IncluiCarro();
@@ -81,85 +78,71 @@ import View.hack;
 			QtdCarrosSinal2++;
 			ArrayCarrosSinal2 = Sinal2.ExibeCarros();
 			
-//			new Thread().sleep(TempoIncluiVeiculos);
-//			Sinal3.IncluiCarro(1);
-//			QtdCarrosSinal3++;
-//			Sinal3.ExibeCarros();
-//			
-//			new Thread().sleep(TempoIncluiVeiculos);
-//			Sinal4.IncluiCarro(1);
-//			QtdCarrosSinal4++;
-//			Sinal4.ExibeCarros();
+			new Thread().sleep(TempoIncluiVeiculos);
+			onibusSinal1 = Sinal1.IncluiOnibus();;
+			QtdCarrosSinal1++;
+			ArrayCarrosSinal1 = Sinal1.ExibeCarros();
 			
-			
-		
-	}
+			new Thread().sleep(TempoIncluiVeiculos);
+			onibusSinal2 = Sinal2.IncluiOnibus();;
+			QtdCarrosSinal2++;
+			ArrayCarrosSinal2 = Sinal2.ExibeCarros();
 	
+	}
+	//Abre o sinal 1 para os carros sairem
 	public  void abreSinal1() throws InterruptedException {
-		for(int i = 0 ; i < QtdCarrosSinal1 ; i++){
-			Sinal1.RenoveCarro();
-			QtdCarrosSinal1--;
-			new Thread().sleep(TempoRemoveVeiculos);
-		}
-	}
-	public  void abreSinal2() throws InterruptedException {
-		for(int i = 0 ; i < QtdCarrosSinal2 ; i++){
-			Sinal2.RenoveCarro();
-			new Thread().sleep(TempoRemoveVeiculos);
-		}
-	}
-//	public  void abreSinal3() throws InterruptedException {
-//		for(int i = 0 ; i < QtdCarrosSinal3 ; i++){
-//			Sinal3.RenoveCarro();
-//			QtdCarrosSinal3--;
-//			new Thread().sleep(TempoRemoveVeiculos);
-//		}
-//	}
-//	public  void abreSinal4() throws InterruptedException {
-//		for(int i = 0 ; i < QtdCarrosSinal4 ; i++){
-//			Sinal4.RenoveCarro();
-//			QtdCarrosSinal4--;
-//			new Thread().sleep(TempoRemoveVeiculos);
-//		}
-//	}
-	public  int SinalMaisCarros (){
-		int maior = 0;
-		if (Sinal1.ExibeCarros().size() > Sinal2.ExibeCarros().size()){
-			System.out.println(Sinal1.ExibeCarros().size());
-			System.out.println(Sinal2.ExibeCarros().size());
-			maior = 1;
-			
-		} else maior = 2;
 		
-		return maior;
+			Sinal1.RenoveCarro();
+			Sinal1.RemoveOnibus();
+			new Thread().sleep(TempoRemoveVeiculos);
+	}
+	//Abre o sinal2 para os carros sairem
+	public  void abreSinal2() throws InterruptedException {
+			Sinal2.RenoveCarro();
+			Sinal2.RemoveOnibus();
+			new Thread().sleep(TempoRemoveVeiculos);
 	}
 	
-//	 public String getTeste() {
-//			return teste;
-//		}
-//
-//		public void setTeste(String teste) {
-//			this.teste = teste;
-//		}
-//
-//
-//	    public String getTestString() {
-//	        return testString;
-//	    }
-//
-//	    public void setTestString(String testString) {
-//	        this.testString = testString;
-//	    }  
-//	    public ArrayList<Carro> getArrayCarros() {
-//			return ArrayCarros;
-//		}
-//
-//		public void setArrayCarros(ArrayList<Carro> arrayCarros) {
-//			ArrayCarros = arrayCarros;
-//		}
-
+	//Verifica qual Sinal tem mais carros na fila e se tem onibus
+	public  int SinalMaisCarros (){
+		int sinal = 0;
+		if (Sinal1.ExibeCarros().size() > Sinal2.ExibeCarros().size()){
+			sinal = 1;
+		} 
+		
+		if (Sinal2.ExibeCarros().size() > Sinal1.ExibeCarros().size()){
+			sinal = 2;
+		}
+		if  (Sinal1.ExibeOnibus().size() > 0){
+			sinal = 1;
+		} 
+		
+		if (Sinal2.ExibeOnibus().size() > 0){
+			sinal = 2;
+		}		
+		return sinal;
+	}
+	
+//Get e Set do Bean
+	
 		public ArrayList<Onibus> getArrayOnibus() {
 			return ArrayOnibus;
+		}
+
+		public int getOnibusSinal1() {
+			return onibusSinal1;
+		}
+
+		public void setOnibusSinal1(int onibusSinal1) {
+			this.onibusSinal1 = onibusSinal1;
+		}
+
+		public int getOnibusSinal2() {
+			return onibusSinal2;
+		}
+
+		public void setOnibusSinal2(int onibusSinal2) {
+			this.onibusSinal2 = onibusSinal2;
 		}
 
 		public void setArrayOnibus(ArrayList<Onibus> arrayOnibus) {
@@ -197,22 +180,6 @@ import View.hack;
 		public void setQtdCarrosSinal2(int qtdCarrosSinal2) {
 			QtdCarrosSinal2 = qtdCarrosSinal2;
 		}
-
-//		public int getQtdCarrosSinal3() {
-//			return QtdCarrosSinal3;
-//		}
-//
-//		public void setQtdCarrosSinal3(int qtdCarrosSinal3) {
-//			QtdCarrosSinal3 = qtdCarrosSinal3;
-//		}
-//
-//		public int getQtdCarrosSinal4() {
-//			return QtdCarrosSinal4;
-//		}
-//
-//		public void setQtdCarrosSinal4(int qtdCarrosSinal4) {
-//			QtdCarrosSinal4 = qtdCarrosSinal4;
-//		}
 
 		public int getTempoIncluiVeiculos() {
 			return TempoIncluiVeiculos;
@@ -269,23 +236,6 @@ import View.hack;
 		public void setArrayCarrosSinal2(ArrayList<Carro> arrayCarrosSinal2) {
 			ArrayCarrosSinal2 = arrayCarrosSinal2;
 		}
-
-//		public IncluiRemoveObjetosSinal3 getSinal3() {
-//			return Sinal3;
-//		}
-//
-//		public void setSinal3(IncluiRemoveObjetosSinal3 sinal3) {
-//			Sinal3 = sinal3;
-//		}
-//
-//		public IncluiRemoveObjetosSinal4 getSinal4() {
-//			return Sinal4;
-//		}
-//
-//		public void setSinal4(IncluiRemoveObjetosSinal4 sinal4) {
-//			Sinal4 = sinal4;
-//		}
-
 		
 }
 

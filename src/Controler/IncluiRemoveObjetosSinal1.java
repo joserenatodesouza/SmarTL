@@ -24,15 +24,16 @@ public class IncluiRemoveObjetosSinal1 {
 		return ArrayCarros;
 	}
 	
-	public void IncluiOnibus(){
-		qtd = Random();
+	public int IncluiOnibus(){
+		qtd = RandomBus();
 		for(int i = 0 ; i < qtd ; i++){
 			Onibus Bus = new Onibus();
 			Bus.setIdOnibus(1);
 			Bus.setNomeOnibus("busSinal1" + i);
 			ArrayOnibus.add(Bus);
-			//System.out.println(Bus.getNomeOnibus());			
+			System.out.println(Bus.getNomeOnibus());			
 		}
+		return qtd;
 	}
 	
 	public void RenoveCarro(){
@@ -61,7 +62,14 @@ public class IncluiRemoveObjetosSinal1 {
 	public int Random() {
 		 //instância um objeto da classe Random usando o construtor padrão
 	     Random gerador = new Random();
-	     return gerador.nextInt(4);
+	     int num = gerador.nextInt(3) + 1;
+	     
+	     return num;
+	}
+	public int RandomBus() {
+		 //instância um objeto da classe Random usando o construtor padrão
+	     Random gerador = new Random();
+	     return gerador.nextInt(2);
 	}
 	
 	
